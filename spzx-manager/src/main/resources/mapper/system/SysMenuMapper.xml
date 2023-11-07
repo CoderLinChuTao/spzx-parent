@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysMenuMapper">
+    <insert id="insertSysMenu">
+        insert into sys_menu (
+            id,
+            parent_id,
+            title,
+            component,
+            sort_value,
+            status
+        ) values (
+            #{id},
+            #{parentId},
+            #{title},
+            #{component},
+            #{sortValue},
+            #{status}
+            )
+    </insert>
+    <update id="updateSysMenuById">
+        update sys_menu set
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
+        </if>
+        <if test="sortValue != null">
+            sort_value = #{sortValue},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+    <update id="updateIsDeleteById">
+        update sys_menu
+        <set>
+            is_deleted = 1 , update_time = now()
+        </set>
+        where id = #{id}
+    </update>
+    <select id="selectAllNodes" resultType="com.atguigu.spzx.model.dto.system.SysMenu">
+        select  * from sys_menu where is_deleted=0
+    </select>
+    <select id="selectMenusByUserId" resultType="com.atguigu.spzx.model.dto.system.SysMenu">
+        SELECT DISTINCT
+            m.*
+        FROM
+            sys_menu m
+                LEFT JOIN sys_role_menu rm ON m.id = rm.menu_id
+                LEFT JOIN sys_user_role ur ON rm.role_id = ur.role_id
+        WHERE
+            ur.user_id = #{userId}
+          AND m.is_deleted = 0
+    </select>
+    <select id="selectByParentId" resultType="java.lang.Integer">
+        select count(id)
+        from sys_menu
+        where
+            parent_id = #{parentId}
+          and is_deleted = 0
+    </select>
+</mapper>

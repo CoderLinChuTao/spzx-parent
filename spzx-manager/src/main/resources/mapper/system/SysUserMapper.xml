@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysUserMapper">
+
+    <sql id="columns">
+    id,username userName ,password,name,phone,
+    avatar,description,status,create_time,update_time,is_deleted
+    </sql>
+    
+    <sql id="selectByPageWhere">
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                username like  "%"#{keyword}"%"
+                or
+                name like "%"#{keyword}"%"
+                or
+                phone like "%"#{keyword}"%"
+            </if>
+            <if test="createTimeBegin!=null and createTimeBegin!=''">
+                and create_time >=#{createTimeBegin}
+            </if>
+            <if test="createTimeEnd!=null and createTimeEnd!=''">
+                and create_time &lt;= #{createTimeEnd}
+            </if>
+            and  is_deleted=0
+        </where>
+    </sql>
+    <insert id="insertSysUser">
+        insert into sys_user (
+            username,
+            password,
+            name,
+            phone,
+            avatar,
+            description,
+            status
+        ) values (
+            #{userName},
+            #{password},
+            #{name},
+            #{phone},
+            #{avatar},
+            #{description},
+            #{status}
+        )
+    </insert>
+    <update id="updateSysUser">
+        update sys_user set
+        <if test="userName != null and userName != ''">
+            username = #{userName},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+    <delete id="deleteById">
+        update sys_user set
+        update_time = now() ,
+        is_deleted = 1
+        where
+            id = #{id}
+    </delete>
+
+    <select id="selectByName" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select <include refid="columns"></include> from sys_user where username = #{username}
+    </select>
+
+    <select id="selectUserByPage" resultType="com.atguigu.spzx.model.entity.system.SysUser">
+        select <include refid="columns"></include> from sys_user
+        <include refid="selectByPageWhere"></include>
+    </select>
+</mapper>

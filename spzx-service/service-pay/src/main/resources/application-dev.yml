@@ -1,0 +1,40 @@
+server:
+  port: 8515
+
+spring:
+  application:
+    name: service-pay
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.222.20:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.222.20:3306/db-spzx?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=true
+    username: root
+    password: 123456
+#  data:
+#    redis:
+#      host: 192.168.136.142
+#      port: 6379
+#      password: 1234
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*/*.xml
+#feign:
+#  sentinel:
+#    enabled: true
+
+spzx:
+  alipay:
+    alipay_url: https://openapi-sandbox.dl.alipaydev.com/gateway.do
+    app_id: 9021000131646349
+    app_private_key: "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDDG1nCUzv+3Dn62xcxPgQxYylL5q6JyJK1eM8earB8aZMlfRmNTJjPr7LQxSJknWILGfysPyGMrnPYY2ERloeB2sBjOKgVv5C3DqAQ8Kq+9GIp9VQBr395mgu19Dhh+eq37cVweT/lqkvKy0sXXrILcebLLrr71yYJ7/q25XDTzNDCi1N71BiD3UIXv/t6ADPQptzvMkYl5C2zOF2PPv4HCG3SLihX6TNRJs+I5/djAvHwYukJWfs5jHzeQgya7hP9rPKaJPZXEW76mX3Ke/tvBZLjyy09PNmYK+1ZDfuu7p9s0tug58j4mGgrgf5QkGG9EJGDUEVewTK5FmKbIh4ZAgMBAAECggEBAMFjmtTDK/Sy1cWQ5KwqjH1njMdvIBHyfXjjBmlf1w96lh/SoEEua0lxHg1RWYXheg0G9SzGZrrLMIiL+Os2CZrs+UVgIztrZkYMeRxRcO1VzvdH9Ly29+PQjUsNh9WVotItHEcf5/X9lqKsXwILGu+9NsauyyhVWZ7//8LKKcvEvP/P1yeroYWFP7KrmxFxNlU6hEJ6FAhTCpovddd72NCbTJdu04NJHjFi7PiSkAMBV8eGvi3PppW73Zt5Pmp4t8yZVOqOb3F0VzkHtf+WGn6CUjd9bzXUYou0/JFJaI1Ys2o9jY9fdavsWf9AV3+DtD2jL2N6RdrZabgaOXWCSwECgYEA5HlLdCCc9dTi0Q5aGsX6Vxl8U4oVMVtMYUsT6bMQE4ac8/qtmejGp8P+/ec4yDVZ3z9KSgrPiqLSbd/Ip4q0hkJY4WIm04V6jzFc+YHcbA7ryWyXtx68X8nLqn8B0uMfE5tzhHzADkZ8rns0YIhkyC0d4AqMqPYC2R4DhGbZyl8CgYEA2pzvUyhBsT6Wy51HTi1Kbzpg6kIP4JKy9pnaPNl3HKTJL316lg4rvsXmYAaSpmRStZa+zzZ6eEKaVEL8spr6ndpIld6RlJGjMta78/yoiX5A0I1VnEEKmDKqYVhicRe5GIsQLTjpaW/kuADoo9XvXkk8KcC74a9+RNredru9WocCgYB03ucN/DDOP5vWvLSyxVsNeufyA8xbdwxXKISDIymyE0XuN+jdtgkIgGXLk5+kKkZSwJlLzsPjcu6ZbcPCkF1P4Fh+0ipyQPE0lles+hS64dcTLg1disdpaFxaVqWkLrIS4Y3x066ansvgpP1h8+M50npZxIu3UkCat5OtAr+dmQKBgQDG8F9d5ll5qUJiwpqcCt0cwRxmsX1vWTBg9vtBuogJWe/3NpHysayfa8pMgk67+rnFpAu515K1k66LlXYONrhwI69AKw2CDNJdtknOK5NXo7vpzWQl0I6KmDiyY1MaJYN8UTiEXrESERArXjBWv52XyL9mI40WQLSAhkhB9nDHSwKBgQCEn7t/d26Djj20XqKX7sXjNHfGFgoIn7pm0fCxhXLxDoQSVnY72d5STcr1FFBg2YKpVGOOFOuvooX6FTYIIrQiNjBavBRKGMA/Cz5AmzMQ2ggk15zK72AkcHtSV/Ws0jW+X0rS10sI4dXZ3Gt9225J2idFvjTv1H7UjfpXAKQFSg=="
+    alipay_public_key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3ldChmRvmAV+eHMjgQUj6qsqfAaaImfApMJKmLkRuRMTm4+OFQ4I4s/poZDAD1Nhbb4c1Sjcrt1Gv7bI3SFgfr4/a9W3qQXew3C7Ccvhm/BFGrKkyeTqf0ptknEHDdJjMkYoNWfct2lTWgWQGRT/3zWpubQBtw8gt+XSxAp25buX/vdn1D1YzQR+WAm/smsemSq09hhO4TwCZpaPMRYYuQ9z1YPSezQY/GVyYaF0drxTv2WmwOcM4Wvqm1FuZhRzaFclIxNy5uZ5njxxRN9lp0gohMnt9siHJGOXP3JIrN46T5B6IKqSqUsFwiGWcuLb+Q71E1E3HS61eK+yf4H5+QIDAQAB"
+    return_payment_url: http://192.168.222.20/#/pages/money/paySuccess
+    notify_payment_url: http://9e7vhs.natappfree.cc/api/order/alipay/callback/notify

@@ -1,0 +1,35 @@
+#  application-dev.yml文件内容=============================================================================
+# 配置服务端口号
+server:
+  port: 8501
+
+# 配置数据库连接信息
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.222.20:3306/db-spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  # Redis的相关配置
+  data:
+    redis:
+      host: 192.168.222.20
+      port: 6379
+      password: 123456
+
+# mybatis的配置
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*/*.xml
+
+spzx:
+  auth:
+    noAuthUrls:
+      - /admin/system/index/login
+      - /admin/system/index/generateValidateCode
+      - /doc.html
+      - /webjars/css/**
+      - /webjars/js/**
+      - /v3/api-docs/**
+      - /favicon.ico

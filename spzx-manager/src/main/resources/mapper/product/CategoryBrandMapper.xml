@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.CategoryBrandMapper">
+    <insert id="insertCategoryBrand">
+        insert into category_brand (
+            id,
+            brand_id,
+            category_id,
+            create_time,
+            update_time ,
+            is_deleted
+        ) values (
+            #{id},
+            #{brandId},
+            #{categoryId},
+            now(),
+            now(),
+            0
+                 )
+    </insert>
+    <update id="updateCategoryBrand">
+        update category_brand set
+        <if test="brandId != null and brandId != ''">
+            brand_id = #{brandId},
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            category_id = #{categoryId},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+    <update id="updateCategoryBrandById">
+        update category_brand set is_deleted=1,update_time=now() where id= #{id}
+    </update>
+
+
+    <select id="selectByPage" resultType="com.atguigu.spzx.model.entity.product.CategoryBrand">
+        select b.logo,cb.brand_id ,cb.category_id,cb.id as id, b.name as brandName, c.name as categoryName
+        from brand b,
+        category c,
+        category_brand cb
+        <where>
+            <if test="brandId!=null and brandId!=''">
+                cb.brand_id = #{brandId}
+            </if>
+            <if test="categoryId!=null and categoryId!=''">
+                and cb.category_id = #{categoryId}
+            </if>
+            and b.id = cb.brand_id
+            and c.id = cb.category_id
+            and b.is_deleted=0
+            and c.is_deleted=0
+            and cb.is_deleted=0
+        </where>
+    </select>
+    <select id="selectBrandByCategoryId" resultType="com.atguigu.spzx.model.entity.product.Brand">
+        select b.* from  brand b,category_brand cb where b.id = cb.brand_id and cb.category_id = #{categoryId}
+    </select>
+</mapper>
